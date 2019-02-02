@@ -1,6 +1,6 @@
 module.exports = {
-    base: '/java/',
-    title: 'QJSON Java Version',
+    base: '/obarch4j/codec/',
+    title: 'QJSON',
     themeConfig: {
         sidebar: [
             '/',

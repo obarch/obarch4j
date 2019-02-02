@@ -1,1 +1,1 @@
-../qjson-java/src/test/java/org/qjson/spi
+../codec/src/test/java/io/obarch/codec/spi

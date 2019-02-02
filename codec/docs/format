@@ -1,1 +1,1 @@
-../qjson-java/src/test/java/org/qjson/format
+../codec/src/test/java/io/obarch/codec/format
