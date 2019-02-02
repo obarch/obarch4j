@@ -1,9 +1,9 @@
 package org.qjson;
 
 import org.junit.Assert;
-import org.qjson.junit.md.CompileClasses;
-import org.qjson.junit.md.LoadClass;
-import org.qjson.junit.md.Rmtree;
+import io.obarch.livedoc.CompileClasses;
+import io.obarch.livedoc.LoadClass;
+import io.obarch.livedoc.Rmtree;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.qjson.test.md.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
 
 public interface TestDemo {
 

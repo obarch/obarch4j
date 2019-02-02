@@ -2,8 +2,8 @@ package org.qjson.decode;
 
 import org.junit.Test;
 
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
-import static org.qjson.junit.md.TestInMarkdown.stripQuote;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.stripQuote;
 
 public class SkipTest {
 

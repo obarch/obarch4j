@@ -1,11 +1,11 @@
 package org.qjson.format;
 
 import org.qjson.QJSON;
-import org.qjson.junit.md.TestData;
+import io.obarch.livedoc.TestData;
 import org.junit.Test;
 
-import static org.qjson.junit.md.TestInMarkdown.stripQuote;
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.stripQuote;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
 
 public class ObjectTest {
 

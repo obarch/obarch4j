@@ -2,15 +2,15 @@ package org.qjson;
 
 import org.junit.Assert;
 import org.mdkt.compiler.InMemoryJavaCompiler;
-import org.qjson.junit.md.*;
+import io.obarch.livedoc.*;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
-import static org.qjson.junit.md.TestInMarkdown.stripQuote;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.stripQuote;
 
 public interface TestDecode {
 

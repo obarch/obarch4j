@@ -10,8 +10,8 @@ import org.qjson.encode.StringEncoderSink;
 
 import java.util.List;
 
-import static org.qjson.junit.md.TestInMarkdown.stripQuote;
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.stripQuote;
 
 public class PrimitiveTest {
 

@@ -1,6 +1,6 @@
 package org.qjson;
 
-import org.qjson.junit.md.*;
+import io.obarch.livedoc.*;
 import org.junit.Assert;
 import org.mdkt.compiler.InMemoryJavaCompiler;
 
@@ -8,8 +8,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.qjson.junit.md.TestInMarkdown.stripQuote;
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.stripQuote;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
 
 public interface TestEncode {
 
