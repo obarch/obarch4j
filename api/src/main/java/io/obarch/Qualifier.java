@@ -1,4 +1,4 @@
-package com.obarch;
+package io.obarch;
 
 import java.util.Arrays;
 

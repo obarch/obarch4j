@@ -1,6 +1,6 @@
-package com.obarch.buf;
+package io.obarch.buf;
 
-import com.obarch.Event;
+import io.obarch.Event;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;

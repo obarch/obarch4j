@@ -1,7 +1,7 @@
-package com.obarch.stat;
+package io.obarch.stat;
 
 
-import com.obarch.Transaction;
+import io.obarch.Transaction;
 
 import java.util.function.Consumer;
 

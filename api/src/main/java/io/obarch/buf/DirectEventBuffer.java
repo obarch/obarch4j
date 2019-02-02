@@ -1,6 +1,6 @@
-package com.obarch.buf;
+package io.obarch.buf;
 
-import com.obarch.Event;
+import io.obarch.Event;
 
 import java.util.ArrayList;
 import java.util.List;

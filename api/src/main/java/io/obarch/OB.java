@@ -1,4 +1,4 @@
-package com.obarch;
+package io.obarch;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-// Observability is the API for:
+// OB (observability) provides the API:
 // to push event
 // to let observer pull current state from resources
 //
 // The process of pushing event is:
 // instrument/log => transaction => tx handler => filter => event => event handler
-public class Observability {
+public class OB {
 
     private static final Map<Qualifier, WeakReference<Resource>> resources = new ConcurrentHashMap<>();
     private static final List<Predicate<Transaction>> whilteList = new CopyOnWriteArrayList<>();
@@ -67,7 +67,7 @@ public class Observability {
     }
 
     // register a resource to be invoked
-    // normally the handler will use Observability to send one or many events back
+    // normally the handler will use OB to send one or many events back
     public static void register(Resource resource) {
         throw new RuntimeException();
     }
@@ -115,14 +115,14 @@ public class Observability {
 
         public static void registerEventHandler(Consumer<Event> eventHandler) {
             if (isFrozen) {
-                throw new IllegalStateException("Observability.SPI has been frozen");
+                throw new IllegalStateException("OB.SPI has been frozen");
             }
             eventHandlers.add(eventHandler);
         }
 
         public static void setFormatter(Function<Object, String> newFormatter) {
             if (isFrozen) {
-                throw new IllegalStateException("Observability.SPI has been frozen");
+                throw new IllegalStateException("OB.SPI has been frozen");
             }
             formatter = newFormatter;
         }

@@ -1,4 +1,4 @@
-package com.obarch;
+package io.obarch;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,14 +11,14 @@ public class LogTest {
 
     @Before
     public void setup() {
-        Observability.SPI.reset();
+        OB.SPI.reset();
     }
 
     @Test
     public void no_arg_no_attribute() {
         List<Event> events = new ArrayList<>();
-        Observability.SPI.registerEventHandler(events::add);
-        Observability.log("some event");
+        OB.SPI.registerEventHandler(events::add);
+        OB.log("some event");
         Assert.assertEquals(1, events.size());
         Assert.assertEquals("some event", events.get(0).schema().eventName);
     }
@@ -26,8 +26,8 @@ public class LogTest {
     @Test
     public void one_arg() {
         List<Event> events = new ArrayList<>();
-        Observability.SPI.registerEventHandler(events::add);
-        Observability.log("some event", "arg1", 100);
+        OB.SPI.registerEventHandler(events::add);
+        OB.log("some event", "arg1", 100);
         Assert.assertEquals(1, events.size());
         Assert.assertEquals("some event", events.get(0).schema().eventName);
         Assert.assertArrayEquals(new String[]{"arg1"}, events.get(0).schema().argNames);
@@ -37,8 +37,8 @@ public class LogTest {
     @Test
     public void two_args() {
         List<Event> events = new ArrayList<>();
-        Observability.SPI.registerEventHandler(events::add);
-        Observability.log("some event", "arg1", 100, "arg2", "hello");
+        OB.SPI.registerEventHandler(events::add);
+        OB.log("some event", "arg1", 100, "arg2", "hello");
         Assert.assertEquals(1, events.size());
         Assert.assertEquals("some event", events.get(0).schema().eventName);
         Assert.assertArrayEquals(new String[]{"arg1", "arg2"}, events.get(0).schema().argNames);
@@ -48,8 +48,8 @@ public class LogTest {
     @Test
     public void level_attribute() {
         List<Event> events = new ArrayList<>();
-        Observability.SPI.registerEventHandler(events::add);
-        Observability.log("some event", Event.LEVEL, Event.DEBUG);
+        OB.SPI.registerEventHandler(events::add);
+        OB.log("some event", Event.LEVEL, Event.DEBUG);
         Assert.assertEquals(1, events.size());
         Assert.assertArrayEquals(new String[0], events.get(0).schema().argNames);
         Assert.assertEquals(Event.DEBUG, events.get(0).schema().level);
@@ -58,8 +58,8 @@ public class LogTest {
     @Test
     public void stat_value() {
         List<Event> events = new ArrayList<>();
-        Observability.SPI.registerEventHandler(events::add);
-        Observability.log("some event", Event.STAT_VALUE, 100);
+        OB.SPI.registerEventHandler(events::add);
+        OB.log("some event", Event.STAT_VALUE, 100);
         Assert.assertEquals(1, events.size());
         Assert.assertArrayEquals(new String[0], events.get(0).schema().argNames);
         Assert.assertEquals(100L, events.get(0).statValue());
