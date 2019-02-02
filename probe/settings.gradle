@@ -1,3 +1,0 @@
-rootProject.name = 'java-probe'
-include 'http'
-includeBuild '../java-api'

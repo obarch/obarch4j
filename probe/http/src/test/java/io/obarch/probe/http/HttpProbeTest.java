@@ -1,4 +1,4 @@
-package com.obarch.probe;
+package io.obarch.probe.http;
 
 import org.junit.Test;
 
