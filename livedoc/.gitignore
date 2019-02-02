@@ -1,0 +1,8 @@
+/.idea
+/out
+/build
+/.gradle
+/gradle
+/gradle.properties
+/node_modules
+*.log
