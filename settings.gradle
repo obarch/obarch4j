@@ -1,2 +1,3 @@
 rootProject.name = 'java'
-include 'livedoc'
+include 'livedoc', 'codec'
+include 'codec:codec-codegen'

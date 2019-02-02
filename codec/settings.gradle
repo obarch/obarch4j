@@ -1,2 +1,2 @@
-rootProject.name = 'qjson-java'
-include 'qjson-java', 'qjson-java-codegen', 'qjson-java-core', 'qjson-java-datetime', 'qjson-java-reflection'
+rootProject.name = 'codec'
+include 'codec', 'codec-codegen', 'codec-core', 'codec-datetime', 'codec-reflection'
