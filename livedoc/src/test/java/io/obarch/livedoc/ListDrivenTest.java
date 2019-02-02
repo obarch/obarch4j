@@ -1,8 +1,8 @@
-package org.qjson.junit.md;
+package io.obarch.livedoc;
 
 import org.junit.Test;
 
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
+import static io.obarch.livedoc.TestInMarkdown.myTestData;
 
 public class ListDrivenTest {
 

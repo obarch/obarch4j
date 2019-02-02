@@ -1,4 +1,4 @@
-package org.qjson.junit.md;
+package io.obarch.livedoc;
 
 import org.commonmark.ext.gfm.tables.TableBlock;
 import org.commonmark.ext.gfm.tables.TableCell;

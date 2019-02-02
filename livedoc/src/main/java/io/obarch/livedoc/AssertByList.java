@@ -1,4 +1,4 @@
-package org.qjson.junit.md;
+package io.obarch.livedoc;
 
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.ListItem;

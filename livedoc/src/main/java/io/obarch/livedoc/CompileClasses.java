@@ -1,4 +1,4 @@
-package org.qjson.junit.md;
+package io.obarch.livedoc;
 
 import org.mdkt.compiler.CompilationException;
 import org.mdkt.compiler.SourceCode;

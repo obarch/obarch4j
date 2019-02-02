@@ -1,15 +1,13 @@
-package org.qjson.junit.md;
+package io.obarch.livedoc;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.qjson.junit.md.TestInMarkdown.myTestData;
 
 public class CodeBlockTest {
 
     @Test
     public void code_block_provide_test_data() {
-        TestData testData = myTestData();
+        TestData testData = TestInMarkdown.myTestData();
         String[] words = testData.code().split("\\r?\\n");
         for (NamedRow row : testData.table()) {
             int count = countPrefix(words, row.get("prefix"));
