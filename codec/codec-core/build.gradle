@@ -1,0 +1,11 @@
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(
+            'org.qjson:junit.md:1.0.3',
+            'junit:junit:4.12',
+    )
+}
