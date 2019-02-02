@@ -1,3 +1,3 @@
 module.exports = {
-    base: '/junit.md/'
+    base: '/obarch4j/livedoc/'
 };
