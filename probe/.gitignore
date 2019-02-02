@@ -1,0 +1,8 @@
+.gradle
+/gradle
+/build
+/out
+/http/.gradle
+/http/gradle
+/http/out
+/http/build
