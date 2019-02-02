@@ -1,4 +1,4 @@
-rootProject.name = 'java'
+rootProject.name = 'obarch4j'
 include 'livedoc'
 include 'codec:core'
 include 'codec:datetime'
