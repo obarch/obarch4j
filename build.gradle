@@ -2,6 +2,12 @@ plugins {
     id "io.codearte.nexus-staging" version "0.20.0"
 }
 allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    group 'io.obarch'
+    version '0.9-SNAPSHOT'
     apply plugin: 'java'
     compileJava {
         options.compilerArgs << '-parameters'

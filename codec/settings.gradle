@@ -1,2 +1,0 @@
-rootProject.name = 'codec'
-include 'codec', 'codec-codegen', 'codec-core', 'codec-datetime', 'codec-reflection'

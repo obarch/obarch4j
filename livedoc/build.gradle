@@ -4,7 +4,7 @@ plugins {
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-group 'org.qjson'
+group 'org.obarch'
 version '1.0.4'
 
 repositories {
