@@ -26,8 +26,8 @@ print(QJSON.stringify(
 
 ```java
 package demo;
-import QJSON;
-import org.qjson.any.*;
+import io.obarch.codec.QJSON;
+import io.obarch.codec.any.*;
 import java.util.*;
 import org.junit.Assert;
 
@@ -49,7 +49,7 @@ public class Demo {
 
 Decode QJSON without any type will return `Any` by default. The interface is defined like this:
 
-<<< @/qjson-java-core/src/main/java/org/qjson/any/Any.java
+<<< @/qjson-java-core/src/main/java/io.obarch.codec.any/Any.java
 
 We can use one `get` method call to access any value in the graph via path.
 
@@ -64,8 +64,8 @@ Assert.assertEquals("d", decoded.get(0, "c"));
 
 ```java
 package demo;
-import QJSON;
-import org.qjson.any.*;
+import io.obarch.codec.QJSON;
+import io.obarch.codec.any.*;
 import java.util.*;
 import org.junit.Assert;
 

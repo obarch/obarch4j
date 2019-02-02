@@ -90,7 +90,7 @@ Assert.assertEquals(Arrays.asList(false), list.get(1));
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import TypeLiteral;
 import java.util.*;
 import org.junit.Assert;
@@ -148,7 +148,7 @@ print(qjson.encode(new MyObjects("a", "b")));
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import MyObjects;
 

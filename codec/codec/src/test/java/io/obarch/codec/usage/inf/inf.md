@@ -42,7 +42,7 @@ print(qjson.encode(obj));
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import My;
 import QJsonEncodeException;
@@ -108,7 +108,7 @@ print(obj.getField());
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import java.util.*;
 import org.junit.Assert;
 import My;

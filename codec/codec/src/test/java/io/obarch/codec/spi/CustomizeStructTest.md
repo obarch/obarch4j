@@ -2,7 +2,7 @@
 
 ```java
 package testdata;
-import org.qjson.spi.*;
+import io.obarch.codec.spi.*;
 public class StringAsBoolean implements Encoder {
     public void encode(EncoderSink sink, Object val) {
         boolean b = Boolean.valueOf((String)val);
@@ -13,7 +13,7 @@ public class StringAsBoolean implements Encoder {
 
 ```java
 package testdata;
-import org.qjson.spi.*;
+import io.obarch.codec.spi.*;
 public class MyClass {
 
     @QJsonProperty(encoder = StringAsBoolean.class)
@@ -34,7 +34,7 @@ public class MyClass {
 
 ```java
 package testdata;
-import org.qjson.spi.*;
+import io.obarch.codec.spi.*;
 import java.util.function.Predicate;
 public class OmitNull implements Predicate<Object> {
     public boolean test(Object val) {
@@ -45,7 +45,7 @@ public class OmitNull implements Predicate<Object> {
 
 ```java
 package testdata;
-import org.qjson.spi.*;
+import io.obarch.codec.spi.*;
 public class MyClass {
 
     @QJsonProperty(shouldEncode = OmitNull.class)

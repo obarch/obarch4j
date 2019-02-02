@@ -117,7 +117,7 @@ public class MyClass {
 
 ```java
 package testdata;
-import org.qjson.spi.*;
+import io.obarch.codec.spi.*;
 import java.util.*;
 public class MyClass {
 

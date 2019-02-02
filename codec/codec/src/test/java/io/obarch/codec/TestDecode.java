@@ -32,8 +32,8 @@ public interface TestDecode {
             String typeLiteral = hasType ? "new TypeLiteral<" + stripQuote(row.get(0)) + ">(){}" : "null";
             String source = "" +
                     "package testdata;\n" +
-                    "import org.qjson.any.*;\n" +
-                    "import org.qjson.*;\n" +
+                    "import io.obarch.codec.any.*;\n" +
+                    "import io.obarch.codec.*;\n" +
                     "import java.util.*;\n" +
                     "public class TestObject {\n" +
                     "   public static TypeLiteral type() {\n" +

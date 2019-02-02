@@ -2,7 +2,7 @@
 
 The interface of `Decoder` is defined like this:
 
-<<< @/qjson-java-core/src/main/java/org/qjson/spi/Decoder.java
+<<< @/qjson-java-core/src/main/java/io.obarch.codec.spi/Decoder.java
 
 We can define our own decoder to customize the decoding behavior.
 
@@ -33,7 +33,7 @@ Assert.assertEquals(date, qjson.decode(OffsetDateTime.class, "\"2008-08-08T00:00
 ```java
 package demo;
 import java.time.*;
-import QJSON;
+import io.obarch.codec.QJSON;
 import DemoDateDecoder;
 import java.util.*;
 import org.junit.Assert;

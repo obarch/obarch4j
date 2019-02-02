@@ -27,7 +27,7 @@ public interface TestEncode {
             String source = "" +
                     "package testdata;\n" +
                     "import java.util.*;\n" +
-                    "import org.qjson.any.*;\n" +
+                    "import io.obarch.codec.any.*;\n" +
                     "public class TestObject {\n" +
                     "   public static Object create() {\n" +
                     "       return " + stripQuote(row.get(hasType ? 1 : 0)) + ";\n" +

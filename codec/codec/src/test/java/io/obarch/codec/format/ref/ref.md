@@ -31,9 +31,9 @@ The path here is `['a']`, which references the key `a` of the root map.
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import org.qjson.any.*;
+import io.obarch.codec.any.*;
 
 public class Demo {
     
@@ -78,7 +78,7 @@ It just works.
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import Node;
 
@@ -112,8 +112,8 @@ print(QJSON.stringify(new AnyList(val, val)));
 
 ```java
 package demo;
-import QJSON;
-import org.qjson.any.*;
+import io.obarch.codec.QJSON;
+import io.obarch.codec.any.*;
 import org.junit.Assert;
 
 public class Demo {
@@ -160,13 +160,13 @@ print(qjson.encode(new Object[]{money, money}));
 
 `ValueObjectEncoder` is defined like this:
 
-<<< @/qjson-java-core/src/main/java/org/qjson/spi/ValueObjectEncoder.java
+<<< @/qjson-java-core/src/main/java/io.obarch.codec.spi/ValueObjectEncoder.java
 
 <hide>
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import ValueObjectEncoder;
 import Money;
 

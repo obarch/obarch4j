@@ -2,14 +2,13 @@ package io.obarch.codec.codegen;
 
 import io.obarch.codec.PlaceholderDecoder;
 import io.obarch.codec.PlaceholderEncoder;
+import io.obarch.codec.codegen.gen.Gen;
+import io.obarch.codec.codegen.gen.Indent;
+import io.obarch.codec.codegen.gen.Line;
 import io.obarch.codec.decode.QJsonDecodeException;
 import io.obarch.codec.encode.QJsonEncodeException;
 import io.obarch.codec.spi.*;
 import org.mdkt.compiler.InMemoryJavaCompiler;
-import io.obarch.codec.codegen.gen.Gen;
-import io.obarch.codec.codegen.gen.Indent;
-import io.obarch.codec.codegen.gen.Line;
-import org.qjson.spi.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

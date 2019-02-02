@@ -47,8 +47,8 @@ Assert.assertEquals(
 
 ```java
 package demo;
-import QJSON;
-import org.qjson.any.*;
+import io.obarch.codec.QJSON;
+import io.obarch.codec.any.*;
 import org.junit.Assert;
 import java.nio.charset.StandardCharsets;
 
@@ -91,9 +91,9 @@ Assert.assertArrayEquals(new byte[]{'t','r','u','e'}, bytesBuilder.copyOfBytes()
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import BytesBuilder;
-import org.qjson.any.*;
+import io.obarch.codec.any.*;
 import org.junit.Assert;
 import java.nio.charset.StandardCharsets;
 

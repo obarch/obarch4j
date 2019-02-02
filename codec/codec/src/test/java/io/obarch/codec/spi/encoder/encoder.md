@@ -2,7 +2,7 @@
 
 The interface of `Encoder` is defined like this:
 
-<<< @/qjson-java-core/src/main/java/org/qjson/spi/Encoder.java
+<<< @/qjson-java-core/src/main/java/io.obarch.codec.spi/Encoder.java
 
 We can define our own encoder to customize the encoding behavior.
 
@@ -34,7 +34,7 @@ print(qjson.encode(date));
 ```java
 package demo;
 import java.time.*;
-import QJSON;
+import io.obarch.codec.QJSON;
 import DemoDateEncoder;
 import java.util.*;
 import org.junit.Assert;
@@ -59,6 +59,6 @@ If object referenced twice, the default behavior is to write the second referenc
 To encode out the object fully, we need to override the method `encodeRef`.
 However, there is a common implementation to be reused:
 
-<<< @/qjson-java-core/src/main/java/org/qjson/spi/ValueObjectEncoder.java
+<<< @/qjson-java-core/src/main/java/io.obarch.codec.spi/ValueObjectEncoder.java
 
 See how to customize [ref](/format/ref/ref.html)

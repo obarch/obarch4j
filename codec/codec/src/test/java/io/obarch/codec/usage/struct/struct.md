@@ -26,7 +26,7 @@ print(post.title);
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import UserPost;
 
@@ -68,7 +68,7 @@ print(post.getTitle());
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import UserPost;
 
@@ -110,7 +110,7 @@ print(post.title);
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import UserPost;
 
@@ -162,7 +162,7 @@ print(post.title);
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import StructDescriptor;
 import UserPost;
@@ -206,7 +206,7 @@ print(QJSON.stringify(post));
 
 ```java
 package demo;
-import QJSON;
+import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import java.time.*;
 import UserPost;
