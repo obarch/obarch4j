@@ -15,7 +15,7 @@ public class ShardedStat implements LogHandler {
     }
 
     @Override
-    public void handle(int logSiteId, Object[] kv) {
+    public void handleLog(int logSiteId, Object[] kv) {
 
     }
 }

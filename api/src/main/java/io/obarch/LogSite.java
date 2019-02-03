@@ -8,6 +8,9 @@ public final class LogSite {
     private final String fileName;
     private final int lineNumber;
     private final String eventName;
+    // when LogSite is registered before LogSiteHandler
+    // we keep the kv here
+    Object[] kv;
 
     public LogSite(String className, String methodName, String fileName, int lineNumber, String eventName) {
         this.className = className;

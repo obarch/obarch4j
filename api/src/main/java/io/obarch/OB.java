@@ -31,11 +31,11 @@ public class OB {
     private static final List<LogSite> logSites = new CopyOnWriteArrayList<>();
     private static AtomicLong seqCounter = new AtomicLong();
 
-    private static boolean isFrozen = false;
-    private static final List<Consumer<LogSite>> logSiteWatchers = new ArrayList<>();
+    private static boolean initialized = false;
+    private static final List<LogSiteHandler> logSiteHandlers = new ArrayList<>();
     private static final List<LogHandler> logHandlers = new ArrayList<>();
-    private static final List<Filter> filters = new ArrayList<>();
-    private static final List<Consumer<Event>> eventHandlers = new ArrayList<>();
+    private static Filter filter = null;
+    private static final List<EventHandler> eventHandlers = new ArrayList<>();
     private static Function<Object, String> formatter = String::valueOf;
 
     // register a resource to be invoked
@@ -49,12 +49,15 @@ public class OB {
         resourceMap.put(qualifier, new WeakReference<>(resource));
     }
 
-    public static int registerLogSite(LogSite logSite) {
+    public static int registerLogSite(LogSite logSite, Object[] kv) {
         synchronized (logSites) {
             int logSiteId = logSites.size();
             logSite.allocatedId(logSiteId);
-            for (Consumer<LogSite> logSiteWatcher : logSiteWatchers) {
-                logSiteWatcher.accept(logSite);
+            if (!initialized) {
+                logSite.kv = kv;
+            }
+            for (LogSiteHandler logSiteHandler : logSiteHandlers) {
+                logSiteHandler.handleLogSite(logSite, kv);
             }
             logSites.add(logSite);
             return logSiteId;
@@ -63,16 +66,14 @@ public class OB {
 
     public static void log(int logSiteId, Object... kv) {
         for (LogHandler logHandler : logHandlers) {
-            logHandler.handle(logSiteId, kv);
+            logHandler.handleLog(logSiteId, kv);
         }
-        for (Filter filter : filters) {
-            if (!filter.shouldLog(logSiteId, kv)) {
-                return;
-            }
+        if (!filter.shouldLog(logSiteId, kv)) {
+            return;
         }
         Event event = createEvent(logSites.get(logSiteId), kv);
-        for (Consumer<Event> eventHandler : eventHandlers) {
-            eventHandler.accept(event);
+        for (EventHandler eventHandler : eventHandlers) {
+            eventHandler.handleEvent(event);
         }
     }
 
@@ -82,7 +83,7 @@ public class OB {
         LogSite logSite = logSiteMap.get(qualifier);
         if (logSite == null) {
             logSite = new LogSite(frame.getClassName(), frame.getMethodName(), frame.getFileName(), frame.getLineNumber(), eventName);
-            registerLogSite(logSite);
+            registerLogSite(logSite, kv);
             logSiteMap.put(qualifier, logSite);
         }
         log(logSite.logSiteId(), kv);
@@ -101,11 +102,21 @@ public class OB {
     public static class SPI {
 
         public static synchronized void initialize(Consumer<SPI> init) {
-            if (isFrozen) {
+            if (initialized) {
                 throw new IllegalStateException("OB.SPI has already been initialized");
             }
-            isFrozen = true;
+            initialized = true;
             init.accept(new SPI());
+            if (filter == null) {
+                if (eventHandlers.isEmpty()) {
+                    filter = (logSiteId, kv) -> false;
+                } else {
+                    filter = (logSiteId, kv) -> true;
+                }
+            }
+            for (LogSite logSite : logSites) {
+                logSite.kv = null;
+            }
         }
 
         private SPI() {
@@ -132,11 +143,11 @@ public class OB {
             throw new RuntimeException();
         }
 
-        public void registerFilter(Filter filter) {
-            filters.add(filter);
+        public void setFilter(Filter newFilter) {
+            filter = newFilter;
         }
 
-        public void registerEventHandler(Consumer<Event> eventHandler) {
+        public void registerEventHandler(EventHandler eventHandler) {
             eventHandlers.add(eventHandler);
         }
 
@@ -148,21 +159,21 @@ public class OB {
             return logSites.get(logSiteId);
         }
 
-        public void registerLogSiteWatcher(Consumer<LogSite> watcher) {
+        public void registerLogSiteHandler(LogSiteHandler logSiteHandler) {
             synchronized (logSites) {
                 for (LogSite logSite : logSites) {
-                    watcher.accept(logSite);
+                    logSiteHandler.handleLogSite(logSite, logSite.kv);
                 }
-                logSiteWatchers.add(watcher);
+                logSiteHandlers.add(logSiteHandler);
             }
         }
 
         // should only be used in test
         public static void __reset() {
-            logSiteWatchers.clear();
+            logSiteHandlers.clear();
             logSites.clear();
             eventHandlers.clear();
-            isFrozen = false;
+            initialized = false;
         }
     }
 }
