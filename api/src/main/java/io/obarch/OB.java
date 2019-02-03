@@ -9,125 +9,158 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 // OB (observability) provides the API:
 // to push event
-// to let observer pull current state from resources
+// to let observer pull current state from resourceMap
 //
 // The process of pushing event is:
-// instrument/log => transaction => tx handler => filter => event => event handler
+// instrument/log => kv => log handler => filter => event => event handler
 public class OB {
 
-    private static final Map<Qualifier, WeakReference<Resource>> resources = new ConcurrentHashMap<>();
-    private static final List<Predicate<Transaction>> whilteList = new CopyOnWriteArrayList<>();
-    private static final List<Predicate<Transaction>> blackList = new CopyOnWriteArrayList<>();
+    public static final String STAT_VALUE = "STAT_VALUE";
+    public static final String LEVEL = "LEVEL";
+    public static final Level TRACE = Level.TRACE;
+    public static final Level DEBUG = Level.DEBUG;
+    public static final Level INFO = Level.INFO;
+    public static final Level WARN = Level.WARN;
+    public static final Level ERROR = Level.ERROR;
+
+    private static final Map<Qualifier, WeakReference<Resource>> resourceMap = new ConcurrentHashMap<>();
+    private static final Map<Qualifier, LogSite> logSiteMap = new ConcurrentHashMap<>();
+    private static final List<LogSite> logSites = new CopyOnWriteArrayList<>();
     private static AtomicLong seqCounter = new AtomicLong();
 
-    private static volatile boolean isFrozen = false;
-    private static final List<Consumer<Transaction>> txHandlers = new ArrayList<>();
+    private static boolean isFrozen = false;
+    private static final List<Consumer<LogSite>> logSiteWatchers = new ArrayList<>();
+    private static final List<LogHandler> logHandlers = new ArrayList<>();
+    private static final List<Filter> filters = new ArrayList<>();
     private static final List<Consumer<Event>> eventHandlers = new ArrayList<>();
-    private static Function<Object, String> formatter = Object::toString;
+    private static Function<Object, String> formatter = String::valueOf;
 
-    // instrumented code will call this method
-    public static void log(Qualifier qualifier, String fileName, String lineNumber, String eventName, Object[] kv) {
-        EventSchema schema = EventSchema.get(qualifier, fileName, lineNumber, eventName, kv);
-        Transaction tx = new Transaction(schema, kv);
-        push(tx);
-    }
-
-    public static void log(String eventName, Object... kv) {
+    // register a resource to be invoked
+    // normally the handler will use OB to send one or many events back
+    public static void registerResource(Resource resource) {
         StackTraceElement frame = Thread.currentThread().getStackTrace()[2];
-        String fileName = frame.getFileName();
-        String lineNumber = String.valueOf(frame.getLineNumber());
-        Qualifier qualifier = new Qualifier(
-                "fileName", fileName,
-                "lineNumber", lineNumber,
-                "eventName", eventName);
-        log(qualifier, fileName, lineNumber, eventName, kv);
+        registerResource(new Qualifier(frame.getClassName(), frame.getLineNumber()), resource);
     }
 
-    public static void push(Transaction tx) {
-        EventSchema schema = tx.schema();
-        Object[] kv = tx.kv();
-        String[] argValues = new String[schema.argIndices.length];
-        for (int i = 0; i < schema.argIndices.length; i++) {
-            int argIndex = schema.argIndices[i];
-            argValues[i] = formatter.apply(kv[argIndex]);
+    public static void registerResource(Qualifier qualifier, Resource resource) {
+        resourceMap.put(qualifier, new WeakReference<>(resource));
+    }
+
+    public static int registerLogSite(LogSite logSite) {
+        synchronized (logSites) {
+            int logSiteId = logSites.size();
+            logSite.allocatedId(logSiteId);
+            for (Consumer<LogSite> logSiteWatcher : logSiteWatchers) {
+                logSiteWatcher.accept(logSite);
+            }
+            logSites.add(logSite);
+            return logSiteId;
         }
-        long statValue = 0;
-        if (schema.statValueIndex != -1) {
-            statValue = ((Number)kv[schema.statValueIndex]).longValue();
+    }
+
+    public static void log(int logSiteId, Object... kv) {
+        for (LogHandler logHandler : logHandlers) {
+            logHandler.handle(logSiteId, kv);
         }
-        long seq = seqCounter.incrementAndGet();
-        Event event = new Event(seq, System.currentTimeMillis(), schema, argValues, statValue);
+        for (Filter filter : filters) {
+            if (!filter.shouldLog(logSiteId, kv)) {
+                return;
+            }
+        }
+        Event event = createEvent(logSites.get(logSiteId), kv);
         for (Consumer<Event> eventHandler : eventHandlers) {
             eventHandler.accept(event);
         }
     }
 
-    // register a resource to be invoked
-    // normally the handler will use OB to send one or many events back
-    public static void register(Resource resource) {
-        throw new RuntimeException();
+    public static void log(String eventName, Object... kv) {
+        StackTraceElement frame = Thread.currentThread().getStackTrace()[2];
+        Qualifier qualifier = new Qualifier(frame.getClassName(), frame.getLineNumber());
+        LogSite logSite = logSiteMap.get(qualifier);
+        if (logSite == null) {
+            logSite = new LogSite(frame.getClassName(), frame.getMethodName(), frame.getFileName(), frame.getLineNumber(), eventName);
+            registerLogSite(logSite);
+            logSiteMap.put(qualifier, logSite);
+        }
+        log(logSite.logSiteId(), kv);
     }
 
-    public static void register(Qualifier qualifier, Resource resource) {
-        throw new RuntimeException();
+    private static Event createEvent(LogSite logSite, Object[] kv) {
+        String[] props = new String[kv.length];
+        for (int i = 0; i < kv.length; i += 2) {
+            props[i] = (String) kv[i];
+            props[i + 1] = formatter.apply(kv[i + 1]);
+        }
+        long seq = seqCounter.incrementAndGet();
+        return new Event(seq, System.currentTimeMillis(), logSite, props);
     }
 
     public static class SPI {
 
-        public static void freeze() {
-            isFrozen = true;
-        }
-
-        public static List<Qualifier> listResourceQualifiers() {
-            throw new RuntimeException();
-        }
-
-        public static Resource getResource(Qualifier qualifier) {
-            throw new RuntimeException();
-        }
-
-        public static void registerTransactionHandler(Consumer<Transaction> txHandler) {
-            throw new RuntimeException();
-        }
-
-        public static List<String> listEventQualifiers() {
-            throw new RuntimeException();
-        }
-
-        public static EventSchema getEventSchema(Qualifier qualifier) {
-            throw new RuntimeException();
-        }
-
-        public static void registerFilterToWhiteList(Predicate<Transaction> filter) {
-            throw new RuntimeException();
-        }
-
-        public static void registerFilterToBlackList(Predicate<Transaction> filter) {
-            throw new RuntimeException();
-        }
-
-        public static void removeAllFilters() {
-        }
-
-        public static void registerEventHandler(Consumer<Event> eventHandler) {
+        public static synchronized void initialize(Consumer<SPI> init) {
             if (isFrozen) {
-                throw new IllegalStateException("OB.SPI has been frozen");
+                throw new IllegalStateException("OB.SPI has already been initialized");
             }
+            isFrozen = true;
+            init.accept(new SPI());
+        }
+
+        private SPI() {
+            // use initialize to register spi
+        }
+
+        public List<Qualifier> listResourceQualifiers() {
+            throw new RuntimeException();
+        }
+
+        public Resource getResource(Qualifier qualifier) {
+            throw new RuntimeException();
+        }
+
+        public void registerLogHandler(LogHandler logHandler) {
+            logHandlers.add(logHandler);
+        }
+
+        public List<String> listLogSites() {
+            throw new RuntimeException();
+        }
+
+        public LogSite getLogSite(Qualifier qualifier) {
+            throw new RuntimeException();
+        }
+
+        public void registerFilter(Filter filter) {
+            filters.add(filter);
+        }
+
+        public void registerEventHandler(Consumer<Event> eventHandler) {
             eventHandlers.add(eventHandler);
         }
 
-        public static void setFormatter(Function<Object, String> newFormatter) {
-            if (isFrozen) {
-                throw new IllegalStateException("OB.SPI has been frozen");
-            }
+        public void setFormatter(Function<Object, String> newFormatter) {
             formatter = newFormatter;
         }
 
-        public static void reset() {
+        public LogSite getLogSite(int logSiteId) {
+            return logSites.get(logSiteId);
+        }
+
+        public void registerLogSiteWatcher(Consumer<LogSite> watcher) {
+            synchronized (logSites) {
+                for (LogSite logSite : logSites) {
+                    watcher.accept(logSite);
+                }
+                logSiteWatchers.add(watcher);
+            }
+        }
+
+        // should only be used in test
+        public static void __reset() {
+            logSiteWatchers.clear();
+            logSites.clear();
             eventHandlers.clear();
             isFrozen = false;
         }

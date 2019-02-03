@@ -1,12 +1,12 @@
 package io.obarch.stat;
 
 
-import io.obarch.Transaction;
+import io.obarch.LogHandler;
 
-import java.util.function.Consumer;
+public class Counter implements LogHandler {
 
-public class Counter implements Consumer<Transaction> {
     @Override
-    public void accept(Transaction tx) {
+    public void handle(int logSiteId, Object[] kv) {
+
     }
 }

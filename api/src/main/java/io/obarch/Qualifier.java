@@ -1,17 +1,15 @@
 package io.obarch;
 
-import java.util.Arrays;
+import java.util.Objects;
 
 public final class Qualifier {
 
-    private final String[] segments;
+    private final String className;
+    private final int lineNumber;
 
-    public Qualifier(String... segments) {
-        this.segments = segments;
-    }
-
-    public String[] segments() {
-        return segments;
+    public Qualifier(String className, int lineNumber) {
+        this.className = className;
+        this.lineNumber = lineNumber;
     }
 
     @Override
@@ -19,11 +17,12 @@ public final class Qualifier {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Qualifier qualifier = (Qualifier) o;
-        return Arrays.equals(segments, qualifier.segments);
+        return lineNumber == qualifier.lineNumber &&
+                Objects.equals(className, qualifier.className);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(segments);
+        return Objects.hash(className, lineNumber);
     }
 }

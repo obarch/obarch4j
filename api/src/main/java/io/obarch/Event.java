@@ -2,39 +2,24 @@ package io.obarch;
 
 public final class Event {
 
-    public static final String STAT_VALUE = "STAT_VALUE";
-    public static final String LEVEL = "LEVEL";
-    public static final Level TRACE = Level.TRACE;
-    public static final Level DEBUG = Level.DEBUG;
-    public static final Level INFO = Level.INFO;
-    public static final Level WARN = Level.WARN;
-    public static final Level ERROR = Level.ERROR;
-    public static final Level FATAL = Level.FATAL;
-
-    private final EventSchema schema;
-    private final String[] argValues;
-    private final long statValue;
+    private final LogSite logSite;
+    private final String[] props;
     private final long seq;
     private final long timestamp;
 
-    public Event(long seq, long timestamp, EventSchema schema, String[] argValues, long statValue) {
+    public Event(long seq, long timestamp, LogSite logSite, String[] props) {
         this.seq = seq;
         this.timestamp = timestamp;
-        this.schema = schema;
-        this.argValues = argValues;
-        this.statValue = statValue;
+        this.logSite = logSite;
+        this.props = props;
     }
 
-    public EventSchema schema() {
-        return schema;
+    public LogSite logSite() {
+        return logSite;
     }
 
-    public String[] argValues() {
-        return argValues;
-    }
-
-    public long statValue() {
-        return statValue;
+    public String[] props() {
+        return props;
     }
 
     public long seq() {

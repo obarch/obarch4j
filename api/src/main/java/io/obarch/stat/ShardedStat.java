@@ -1,22 +1,21 @@
 package io.obarch.stat;
 
+import io.obarch.LogHandler;
 
-import io.obarch.Transaction;
-
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ShardedStat implements Consumer<Transaction> {
+public class ShardedStat implements LogHandler {
 
-    private final Supplier<Consumer<Transaction>> supplier;
+    private final Supplier<LogHandler> supplier;
     private final int shardsCount;
 
-    public ShardedStat(Supplier<Consumer<Transaction>> supplier, int shardsCount) {
+    public ShardedStat(Supplier<LogHandler> supplier, int shardsCount) {
         this.supplier = supplier;
         this.shardsCount = shardsCount;
     }
 
     @Override
-    public void accept(Transaction tx) {
+    public void handle(int logSiteId, Object[] kv) {
+
     }
 }

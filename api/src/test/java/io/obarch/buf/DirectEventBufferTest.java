@@ -102,6 +102,6 @@ public class DirectEventBufferTest {
 
     @NotNull
     public Event event(int seq) {
-        return new Event(seq, 0, null, null, 0);
+        return new Event(seq, 0, null, null);
     }
 }

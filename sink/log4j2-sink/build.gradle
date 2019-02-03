@@ -1,0 +1,9 @@
+dependencies {
+    compile(
+            project(':api'),
+            'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
+    )
+    testCompile(
+            project(':livedoc'),
+    )
+}
