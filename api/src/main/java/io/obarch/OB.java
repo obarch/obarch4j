@@ -29,14 +29,14 @@ public class OB {
     private static final Map<Qualifier, WeakReference<Resource>> resourceMap = new ConcurrentHashMap<>();
     private static final Map<Qualifier, LogSite> logSiteMap = new ConcurrentHashMap<>();
     private static final List<LogSite> logSites = new CopyOnWriteArrayList<>();
-    private static AtomicLong seqCounter = new AtomicLong();
+    private static final AtomicLong seqCounter = new AtomicLong();
 
     private static boolean initialized = false;
-    private static final List<LogSiteHandler> logSiteHandlers = new ArrayList<>();
+    private static final List<LogSiteWatcher> logSiteWatchers = new ArrayList<>();
     private static final List<LogHandler> logHandlers = new ArrayList<>();
     private static Filter filter = null;
-    private static final List<EventHandler> eventHandlers = new ArrayList<>();
     private static Function<Object, String> formatter = String::valueOf;
+    private static final List<EventHandler> eventHandlers = new ArrayList<>();
 
     // register a resource to be invoked
     // normally the handler will use OB to send one or many events back
@@ -56,8 +56,8 @@ public class OB {
             if (!initialized) {
                 logSite.kv = kv;
             }
-            for (LogSiteHandler logSiteHandler : logSiteHandlers) {
-                logSiteHandler.handleLogSite(logSite, kv);
+            for (LogSiteWatcher logSiteWatcher : logSiteWatchers) {
+                logSiteWatcher.onLogSiteAdded(logSite, kv);
             }
             logSites.add(logSite);
             return logSiteId;
@@ -159,18 +159,18 @@ public class OB {
             return logSites.get(logSiteId);
         }
 
-        public void registerLogSiteHandler(LogSiteHandler logSiteHandler) {
+        public void registerLogSiteHandler(LogSiteWatcher logSiteWatcher) {
             synchronized (logSites) {
                 for (LogSite logSite : logSites) {
-                    logSiteHandler.handleLogSite(logSite, logSite.kv);
+                    logSiteWatcher.onLogSiteAdded(logSite, logSite.kv);
                 }
-                logSiteHandlers.add(logSiteHandler);
+                logSiteWatchers.add(logSiteWatcher);
             }
         }
 
         // should only be used in test
         public static void __reset() {
-            logSiteHandlers.clear();
+            logSiteWatchers.clear();
             logSites.clear();
             eventHandlers.clear();
             initialized = false;

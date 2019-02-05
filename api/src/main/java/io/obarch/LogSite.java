@@ -8,7 +8,7 @@ public final class LogSite {
     private final String fileName;
     private final int lineNumber;
     private final String eventName;
-    // when LogSite is registered before LogSiteHandler
+    // when LogSite is registered before LogSiteWatcher
     // we keep the kv here
     Object[] kv;
 
