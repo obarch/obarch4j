@@ -35,7 +35,7 @@ print(qjson.encode(date));
 package demo;
 import java.time.*;
 import io.obarch.codec.QJSON;
-import DemoDateEncoder;
+import io.obarch.codec.spi.encoder.DemoDateEncoder;
 import java.util.*;
 import org.junit.Assert;
 

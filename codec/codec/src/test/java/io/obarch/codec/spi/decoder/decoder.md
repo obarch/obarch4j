@@ -34,7 +34,7 @@ Assert.assertEquals(date, qjson.decode(OffsetDateTime.class, "\"2008-08-08T00:00
 package demo;
 import java.time.*;
 import io.obarch.codec.QJSON;
-import DemoDateDecoder;
+import io.obarch.codec.spi.decoder.DemoDateDecoder;
 import java.util.*;
 import org.junit.Assert;
 

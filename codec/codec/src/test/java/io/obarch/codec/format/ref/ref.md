@@ -80,7 +80,7 @@ It just works.
 package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import Node;
+import io.obarch.codec.format.ref.Node;
 
 public class Demo {
     
@@ -167,8 +167,8 @@ print(qjson.encode(new Object[]{money, money}));
 ```java
 package demo;
 import io.obarch.codec.QJSON;
-import ValueObjectEncoder;
-import Money;
+import io.obarch.codec.spi.ValueObjectEncoder;
+import io.obarch.codec.format.ref.Money;
 
 public class Demo {
     

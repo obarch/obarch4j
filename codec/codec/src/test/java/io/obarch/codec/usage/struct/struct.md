@@ -28,7 +28,7 @@ print(post.title);
 package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import UserPost;
+import io.obarch.codec.usage.struct.public_fields.UserPost;
 
 public class Demo {
     
@@ -70,7 +70,7 @@ print(post.getTitle());
 package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import UserPost;
+import io.obarch.codec.usage.struct.getter_setter.UserPost;
 
 public class Demo {
     
@@ -112,7 +112,7 @@ print(post.title);
 package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import UserPost;
+import io.obarch.codec.usage.struct.adhoc_rename.UserPost;
 
 public class Demo {
     
@@ -164,8 +164,8 @@ print(post.title);
 package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import StructDescriptor;
-import UserPost;
+import io.obarch.codec.spi.StructDescriptor;
+import io.obarch.codec.usage.struct.public_fields.UserPost;
 
 public class Demo {
     
@@ -209,7 +209,7 @@ package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
 import java.time.*;
-import UserPost;
+import io.obarch.codec.usage.struct.adhoc_choose_encoder.UserPost;
 
 public class Demo {
     

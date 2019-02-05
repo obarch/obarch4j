@@ -92,7 +92,7 @@ Assert.assertArrayEquals(new byte[]{'t','r','u','e'}, bytesBuilder.copyOfBytes()
 ```java
 package demo;
 import io.obarch.codec.QJSON;
-import BytesBuilder;
+import io.obarch.codec.encode.BytesBuilder;
 import io.obarch.codec.any.*;
 import org.junit.Assert;
 import java.nio.charset.StandardCharsets;

@@ -44,8 +44,8 @@ print(qjson.encode(obj));
 package demo;
 import io.obarch.codec.QJSON;
 import org.junit.Assert;
-import My;
-import QJsonEncodeException;
+import io.obarch.codec.usage.inf.My;
+import io.obarch.codec.encode.QJsonEncodeException;
 
 public class Demo {
     
@@ -111,7 +111,7 @@ package demo;
 import io.obarch.codec.QJSON;
 import java.util.*;
 import org.junit.Assert;
-import My;
+import io.obarch.codec.usage.inf.My;
 
 public class Demo {
     
