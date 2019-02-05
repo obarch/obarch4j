@@ -23,7 +23,7 @@ public class DirectEventBuffer implements EventBuffer {
     }
 
     @Override
-    public void accept(Event event) {
+    public void handleEvent(Event event) {
         events[tail % max] = event;
         tail++;
         if (tail > 2 * max) {

@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 public class ShardedEventBuffer implements EventBuffer {
 
     @Override
-    public void accept(Event event) {
+    public void handleEvent(Event event) {
     }
 
     @Override
