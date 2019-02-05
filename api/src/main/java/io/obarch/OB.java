@@ -18,8 +18,8 @@ import java.util.function.Function;
 // instrument/log => kv => log handler => filter => event => event handler
 public class OB {
 
-    public static final String STAT_VALUE = "STAT_VALUE";
-    public static final String LEVEL = "LEVEL";
+    public static final String STAT_VALUE = LogSite.STAT_VALUE;
+    public static final String LEVEL = LogSite.LEVEL;
     public static final Level TRACE = Level.TRACE;
     public static final Level DEBUG = Level.DEBUG;
     public static final Level INFO = Level.INFO;
@@ -52,7 +52,7 @@ public class OB {
     public static int registerLogSite(LogSite logSite, Object[] kv) {
         synchronized (logSites) {
             int logSiteId = logSites.size();
-            logSite.allocatedId(logSiteId);
+            logSite.initialize(logSiteId, kv);
             if (!initialized) {
                 logSite.kv = kv;
             }
@@ -65,6 +65,10 @@ public class OB {
     }
 
     public static void log(int logSiteId, Object... kv) {
+        if (!initialized) {
+            System.err.println("io.obarch.OB has not been initialized");
+            return;
+        }
         for (LogHandler logHandler : logHandlers) {
             logHandler.handleLog(logSiteId, kv);
         }
@@ -96,7 +100,7 @@ public class OB {
             props[i + 1] = formatter.apply(kv[i + 1]);
         }
         long seq = seqCounter.incrementAndGet();
-        return new Event(seq, System.currentTimeMillis(), logSite, props);
+        return new Event(seq, System.currentTimeMillis(), logSite, logSite.getLevel(kv), logSite.getStatValue(kv), props);
     }
 
     public static class SPI {
@@ -159,7 +163,7 @@ public class OB {
             return logSites.get(logSiteId);
         }
 
-        public void registerLogSiteHandler(LogSiteWatcher logSiteWatcher) {
+        public void registerLogSiteWatcher(LogSiteWatcher logSiteWatcher) {
             synchronized (logSites) {
                 for (LogSite logSite : logSites) {
                     logSiteWatcher.onLogSiteAdded(logSite, logSite.kv);
