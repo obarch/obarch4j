@@ -93,4 +93,27 @@ interface EncodeString {
             }
         }
     }
+
+    static void writeRaw(BytesEncoderSink sink, String val) {
+        BytesBuilder builder = sink.bytesBuilder();
+        // one char translated to 4 bytes "\/AA" in worst case
+        int maxSize = 4 * val.length();
+        builder.ensureCapacity(builder.length() + maxSize);
+        int offset = builder.length();
+        byte[] buf = builder.buf();
+        ByteBuffer byteBuf = ByteBuffer.wrap(buf, offset, maxSize);
+        CoderResult result = StandardCharsets.UTF_8.newEncoder().encode(
+                CharBuffer.wrap(val),
+                byteBuf, true);
+        if (result.isError()) {
+            try {
+                result.throwException();
+            } catch (Exception e) {
+                throw sink.reportError("encode string to utf8 failed", e);
+            }
+        }
+        int end = byteBuf.position();
+        builder.setLength(end);
+    }
+
 }

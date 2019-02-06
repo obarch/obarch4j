@@ -1,5 +1,7 @@
 package io.obarch;
 
+import io.obarch.codec.spi.QJsonProperty;
+
 public final class Event {
 
     private final LogSite logSite;
@@ -22,6 +24,7 @@ public final class Event {
         return logSite;
     }
 
+    @QJsonProperty(encoder=EventPropsEncoder.class)
     public String[] props() {
         return props;
     }

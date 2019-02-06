@@ -1,9 +1,11 @@
 dependencies {
-    compile(
+    implementation(
             project(':api'),
+            project(':codec:codec'),
+            project(':codec:core'),
             'org.nanohttpd:nanohttpd:2.3.1'
     )
-    testCompile(
+    testImplementation(
             project(':livedoc'),
     )
 }

@@ -66,6 +66,8 @@ public interface EncoderSink {
 
     void write(char b);
 
+    void write(String raw);
+
     QJsonEncodeException reportError(String errMsg);
 
     QJsonEncodeException reportError(String errMsg, Exception cause);

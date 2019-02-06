@@ -80,7 +80,7 @@ public class StringDecoderSource implements DecoderSource {
             } else if (type == 'f') {
                 return decodeDouble();
             } else {
-                throw reportError("expect \\b or \\f");
+                return decodeString();
             }
         }
         return decodeString();

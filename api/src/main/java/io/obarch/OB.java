@@ -1,5 +1,7 @@
 package io.obarch;
 
+import io.obarch.codec.QJSON;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class OB {
     private static final List<LogSiteWatcher> logSiteWatchers = new ArrayList<>();
     private static final List<LogHandler> logHandlers = new ArrayList<>();
     private static Filter filter = null;
-    private static Function<Object, String> formatter = String::valueOf;
+    private static Function<Object, String> formatter = QJSON::stringify;
     private static final List<EventHandler> eventHandlers = new ArrayList<>();
 
     // register a resource to be invoked

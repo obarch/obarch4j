@@ -1,5 +1,7 @@
 dependencies {
     implementation(
+            project(':codec:codec'),
+            project(':codec:core'),
             'org.jetbrains:annotations:16.0.2'
     )
     testImplementation(

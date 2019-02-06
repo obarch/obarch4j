@@ -99,6 +99,11 @@ public final class BytesEncoderSink implements EncoderSink {
         builder.append(b);
     }
 
+    @Override
+    public void write(String raw) {
+        EncodeString.writeRaw(this, raw);
+    }
+
     public void encodeBoolean(boolean val) {
         if (val) {
             builder.append('t', 'r', 'u', 'e');

@@ -27,4 +27,8 @@ public interface Any {
     default Any set(Object key, Object value) {
         throw new UnsupportedOperationException("object is immutable");
     }
+
+    default int size() {
+        throw new UnsupportedOperationException("object is not collection");
+    }
 }

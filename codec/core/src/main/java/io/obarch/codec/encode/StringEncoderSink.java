@@ -112,6 +112,11 @@ public class StringEncoderSink implements EncoderSink {
     }
 
     @Override
+    public void write(String raw) {
+        builder.append(raw);
+    }
+
+    @Override
     public QJsonEncodeException reportError(String errMsg) {
         throw new QJsonEncodeException(errMsg);
     }
