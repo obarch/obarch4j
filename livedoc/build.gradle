@@ -1,6 +1,3 @@
-plugins {
-    id "com.jfrog.bintray" version "1.8.4"
-}
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
@@ -12,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    compile(
+    implementation(
             'org.jetbrains:annotations:16.0.2',
             'junit:junit:4.12',
             'com.atlassian.commonmark:commonmark:0.12.1',
@@ -22,15 +19,6 @@ dependencies {
             'org.mdkt.compiler:InMemoryJavaCompiler:1.3.0'
     )
 }
-
-sourceSets {
-    test {
-        resources {
-            srcDirs = ['src/test/java']
-        }
-    }
-}
-
 
 // === publish to maven central
 
@@ -105,18 +93,6 @@ publishing {
     }
 }
 
-bintray {
-    user = bintrayUser
-    key = bintrayKey
-    publications = ['mavenJava']
-    pkg {
-        repo = 'maven'
-        name = 'junit.md'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/qjson/junit.md.git'
-    }
-}
-
 def customizePom(pom) {
     pom.withXml {
         def root = asNode()
@@ -130,16 +106,16 @@ def customizePom(pom) {
         root.children().last() + {
             resolveStrategy = Closure.DELEGATE_FIRST
 
-            description 'write junit test in markdown'
-            name 'Schema.org Java'
-            url 'https://github.com/qjson/junit.md'
+            description 'write junit test as live documentation'
+            name 'livedoc'
+            url 'https://github.com/obarch/obarch4j/tree/master/livedoc'
             organization {
-                name 'org.qjson'
-                url 'https://github.com/qjson'
+                name 'io.obarch'
+                url 'https://obarch.io'
             }
             issueManagement {
                 system 'GitHub'
-                url 'https://github.com/qjson/junit.md/issues'
+                url 'https://github.com/obarch/obarch4j/issues'
             }
             licenses {
                 license {
@@ -149,9 +125,9 @@ def customizePom(pom) {
                 }
             }
             scm {
-                url 'https://github.com/qjson/junit.md'
-                connection 'scm:git:git://github.com/qjson/junit.md.git'
-                developerConnection 'scm:git:ssh://git@github.com:qjson/junit.md.git'
+                url 'https://github.com/obarch/obarch4j'
+                connection 'scm:git:git://github.com/obarch/obarch4j.git'
+                developerConnection 'scm:git:ssh://git@github.com:obarch/obarch4j.git'
             }
             developers {
                 developer {
@@ -172,9 +148,4 @@ model {
     tasks.publishMavenJavaPublicationToMavenRepository {
         dependsOn project.tasks.signArchives
     }
-}
-
-nexusStaging {
-    username = ossrhUsername
-    password = ossrhPassword
 }

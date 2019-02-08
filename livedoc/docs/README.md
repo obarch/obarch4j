@@ -1,10 +1,11 @@
-# Live Document
+# Livedoc
 
-Write JUnit test in markdown so that
+Livedoc allow you to write JUnit test in Markdown file, to solve following problems
 
-* the test can be read like documentation
-* do not need to escape string
-* easier to write a lot of table driven tests
+* You have unit test, but lack of context so that readers can not know what is actually being tested
+* You have documentation, but it is frequently out of date
+* Java does not have multi-line string literal
+* Table driven tests requires extra effort so that you do not use this great testing method
 
 # Setup
 
@@ -12,8 +13,8 @@ add this to your build.gradle
 
 ```groovy
 dependencies {
-    testCompile(
-            'io.obarch:livedoc:1.0.4',
+    testImplementation(
+            'io.obarch:livedoc:1.0.5',
             'junit:junit:4.12',
     )
 }
