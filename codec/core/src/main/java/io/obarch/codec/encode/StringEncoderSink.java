@@ -65,12 +65,12 @@ public class StringEncoderSink implements EncoderSink {
     }
 
     @Override
-    public void encodeObject(Object val, Encoder encoder) {
+    public void encodeValue(Object val, Encoder encoder) {
         objectTracker.encodeObject(val, encoder);
     }
 
     @Override
-    public void encodeObject(Object val, Encoder.Provider spi) {
+    public void encodeValue(Object val, Encoder.Provider spi) {
         objectTracker.encodeObject(val, spi);
     }
 

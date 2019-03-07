@@ -56,13 +56,13 @@ class MapEncoder implements Encoder {
                 sink.encodeString("null");
             } else {
                 Encoder keyEncoder = getKeyEncoder(key.getClass());
-                sink.encodeObject(key, keyEncoder);
+                sink.encodeValue(key, keyEncoder);
             }
             String encodedKey = sink.sinceMark(mark);
             sink.write(':');
             CurrentPath currentPath = sink.currentPath();
             int oldPath = currentPath.enterMapValue(encodedKey);
-            sink.encodeObject(entry.getValue(), spi);
+            sink.encodeValue(entry.getValue(), spi);
             currentPath.exit(oldPath);
         }
         sink.write('}');

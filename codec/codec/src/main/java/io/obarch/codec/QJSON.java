@@ -257,20 +257,20 @@ public class QJSON implements QJsonSpi {
 
     public String encode(Object val) {
         StringEncoderSink sink = new StringEncoderSink(new StringBuilder());
-        sink.encodeObject(val, this);
+        sink.encodeValue(val, this);
         return sink.toString();
     }
 
     public String encode(Object val, StringBuilder builder) {
         builder.setLength(0);
         StringEncoderSink sink = new StringEncoderSink(builder);
-        sink.encodeObject(val, this);
+        sink.encodeValue(val, this);
         return sink.toString();
     }
 
     public void encode(Object val, BytesBuilder bytesBuilder) {
         BytesEncoderSink sink = new BytesEncoderSink(bytesBuilder);
-        sink.encodeObject(val, this);
+        sink.encodeValue(val, this);
     }
 
     public <T> T decode(Class<T> clazz, String encoded) {
@@ -300,13 +300,13 @@ public class QJSON implements QJsonSpi {
     private Object decode(Type type, byte[] encoded, int offset, int size) {
         Decoder decoder = decoderOf(type);
         BytesDecoderSource source = new BytesDecoderSource(encoded, offset, size);
-        return source.decodeObject(decoder);
+        return source.decodeValue(decoder);
     }
 
     private Object decode(Type type, String encoded) {
         Decoder decoder = decoderOf(type);
         StringDecoderSource source = new StringDecoderSource(encoded);
-        return source.decodeObject(decoder);
+        return source.decodeValue(decoder);
     }
 
     // === static api ===

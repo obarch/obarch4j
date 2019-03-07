@@ -1,7 +1,7 @@
 package io.obarch.codec.spi;
 
 // Encoder should not be used directly
-// always use `sink.encodeObject` to call encoder
+// always use `sink.encodeValue` to call encoder
 public interface Encoder {
 
     interface Provider {

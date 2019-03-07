@@ -15,7 +15,7 @@ class LocalTimeDecoder implements Decoder {
 
     @Override
     public Object decode(DecoderSource source) {
-        int[] arr = (int[]) source.decodeObject(arrDecoder);
+        int[] arr = (int[]) source.decodeValue(arrDecoder);
         return LocalTime.of(arr[0], arr[1], arr[2], arr[3]);
     }
 }

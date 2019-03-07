@@ -71,7 +71,7 @@ class ArrayEncoderGenerator implements EncoderGenerator {
         ).__(new Indent(() -> {
                     g.__(new Line("if (i > 0) { sink.write(','); }"));
                     g.__(new Line("int oldPath = sink.currentPath().enterListElement(i);"));
-                    g.__(new Line("sink.encodeObject(arr[i], spi);"));
+                    g.__(new Line("sink.encodeValue(arr[i], spi);"));
                     g.__(new Line("sink.currentPath().exit(oldPath);"));
                 })
         ).__(new Line("}"));

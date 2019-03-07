@@ -116,9 +116,9 @@ public class StructEncoderGenerator implements EncoderGenerator {
             ).__(asStringLiteral(prop.name)
             ).__(new Line(");"));
             if (prop.encoder == null) {
-                g.__("sink.encodeObject(").__(expr).__(new Line(", spi);"));
+                g.__("sink.encodeValue(").__(expr).__(new Line(", spi);"));
             } else {
-                g.__("sink.encodeObject(").__(expr).__(", this.encoder").__(i).__(new Line(");"));
+                g.__("sink.encodeValue(").__(expr).__(", this.encoder").__(i).__(new Line(");"));
             }
             g.__(new Line("sink.currentPath().exit(oldPath);"));
             if (prop.shouldEncode != null) {

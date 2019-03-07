@@ -102,12 +102,12 @@ public class StringDecoderSource implements DecoderSource {
     }
 
     @Override
-    public Object decodeObject(Decoder decoder) {
+    public Object decodeValue(Decoder decoder) {
         return pathTracker.decodeObject(decoder, true);
     }
 
     @Override
-    public Object decodeObject(Decoder decoder, boolean track) {
+    public Object decodeValue(Decoder decoder, boolean track) {
         return pathTracker.decodeObject(decoder, track);
     }
 

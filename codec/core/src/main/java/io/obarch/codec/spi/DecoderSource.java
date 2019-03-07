@@ -46,9 +46,9 @@ public interface DecoderSource {
 
     Object decodeRef(Decoder decoder);
 
-    Object decodeObject(Decoder decoder);
+    Object decodeValue(Decoder decoder);
 
-    Object decodeObject(Decoder decoder, boolean track);
+    Object decodeValue(Decoder decoder, boolean track);
 
     CurrentPath currentPath();
 

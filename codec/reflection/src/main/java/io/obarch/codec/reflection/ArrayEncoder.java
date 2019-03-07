@@ -25,7 +25,7 @@ public class ArrayEncoder implements Encoder {
             }
             Object elem = Array.get(val, i);
             int oldPath = currentPath.enterListElement(i);
-            sink.encodeObject(elem, spi);
+            sink.encodeValue(elem, spi);
             currentPath.exit(oldPath);
         }
         sink.write(']');

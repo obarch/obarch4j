@@ -71,9 +71,9 @@ public class StructEncoder implements Encoder {
 
     private void encodeProp(EncoderSink sink, StructDescriptor.Prop prop, Object propVal) {
         if (prop.encoder == null) {
-            sink.encodeObject(propVal, spi);
+            sink.encodeValue(propVal, spi);
         } else {
-            sink.encodeObject(propVal, prop.encoder);
+            sink.encodeValue(propVal, prop.encoder);
         }
     }
 

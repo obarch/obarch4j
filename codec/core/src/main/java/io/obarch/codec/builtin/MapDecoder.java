@@ -44,7 +44,7 @@ class MapDecoder implements Decoder {
         return source -> {
             byte[] bytes = source.decodeBytes();
             BytesDecoderSource newSource = new BytesDecoderSource(bytes, 0, bytes.length);
-            return newSource.decodeObject(keyDecoder);
+            return newSource.decodeValue(keyDecoder);
         };
     }
 
@@ -77,13 +77,13 @@ class MapDecoder implements Decoder {
         CurrentPath currentPath = source.currentPath();
         do {
             int mark = source.mark();
-            Object key = source.decodeObject(keyDecoder, false);
+            Object key = source.decodeValue(keyDecoder, false);
             String encodedKey = source.sinceMark(mark);
             if (source.read() != ':') {
                 throw source.reportError("expect :");
             }
             int oldPath = currentPath.enterMapValue(encodedKey);
-            Object value = source.decodeObject(valueDecoder);
+            Object value = source.decodeValue(valueDecoder);
             currentPath.exit(oldPath);
             map.put(key, value);
         } while ((b = source.read()) == ',');

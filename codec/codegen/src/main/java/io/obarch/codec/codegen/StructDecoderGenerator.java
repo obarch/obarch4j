@@ -129,7 +129,7 @@ public class StructDecoderGenerator implements DecoderGenerator {
         ).__(prop.method.getName()
         ).__("(("
         ).__(prop.method.getParameterTypes()[0].getCanonicalName()
-        ).__(")source.decodeObject(decoder"
+        ).__(")source.decodeValue(decoder"
         ).__(i
         ).__(new Line("));"));
     }
@@ -139,7 +139,7 @@ public class StructDecoderGenerator implements DecoderGenerator {
         ).__(prop.field.getName()
         ).__(" = ("
         ).__(prop.field.getType().getCanonicalName()
-        ).__(")source.decodeObject(decoder"
+        ).__(")source.decodeValue(decoder"
         ).__(i
         ).__(new Line(");"));
     }

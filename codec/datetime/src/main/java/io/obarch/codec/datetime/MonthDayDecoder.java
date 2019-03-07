@@ -15,7 +15,7 @@ class MonthDayDecoder implements Decoder {
 
     @Override
     public Object decode(DecoderSource source) {
-        int[] arr = (int[]) source.decodeObject(arrDecoder);
+        int[] arr = (int[]) source.decodeValue(arrDecoder);
         return MonthDay.of(arr[0], arr[1]);
     }
 }

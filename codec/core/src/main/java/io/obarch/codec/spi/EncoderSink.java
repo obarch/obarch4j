@@ -42,9 +42,9 @@ public interface EncoderSink {
 
     void encodeBytes(byte[] val);
 
-    void encodeObject(Object val, Encoder encoder);
+    void encodeValue(Object val, Encoder encoder);
 
-    void encodeObject(Object val, Encoder.Provider spi);
+    void encodeValue(Object val, Encoder.Provider spi);
 
     CurrentPath currentPath();
 

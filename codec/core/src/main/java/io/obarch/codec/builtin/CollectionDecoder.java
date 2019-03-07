@@ -51,7 +51,7 @@ class CollectionDecoder implements Decoder {
         do {
             CurrentPath currentPath = source.currentPath();
             int oldPath = currentPath.enterListElement(i);
-            col.add(source.decodeObject(elemDecoder));
+            col.add(source.decodeValue(elemDecoder));
             currentPath.exit(oldPath);
             i++;
         } while ((b = source.read()) == ',');

@@ -17,7 +17,7 @@ class OffsetTimeDecoder implements Decoder {
 
     @Override
     public Object decode(DecoderSource source) {
-        int[] arr = (int[]) source.decodeObject(arrDecoder);
+        int[] arr = (int[]) source.decodeValue(arrDecoder);
         LocalTime localTime = LocalTime.of(arr[0], arr[1], arr[2], arr[3]);
         ZoneOffset offset = ZoneOffset.ofTotalSeconds(arr[4]);
         return OffsetTime.of(localTime, offset);

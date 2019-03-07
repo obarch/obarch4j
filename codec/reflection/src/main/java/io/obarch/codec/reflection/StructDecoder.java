@@ -85,7 +85,7 @@ public class StructDecoder implements Decoder {
                 continue;
             }
             int oldPath = currentPath.enterStructField(prop.name);
-            Object propVal = source.decodeObject(prop.decoder);
+            Object propVal = source.decodeValue(prop.decoder);
             currentPath.exit(oldPath);
             setProp(obj, prop, propVal);
         } while ((b = source.read()) == ',');

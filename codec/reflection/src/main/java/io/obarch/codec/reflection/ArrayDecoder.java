@@ -38,7 +38,7 @@ public class ArrayDecoder implements Decoder {
         int length = 4;
         do {
             int oldPath = currentPath.enterListElement(i);
-            Array.set(arr, i++, source.decodeObject(elemDecoder));
+            Array.set(arr, i++, source.decodeValue(elemDecoder));
             currentPath.exit(oldPath);
             if (i == length) {
                 arr = grow(arr, length, length * 2);

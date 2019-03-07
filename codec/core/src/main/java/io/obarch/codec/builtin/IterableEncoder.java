@@ -27,7 +27,7 @@ class IterableEncoder implements Encoder {
             }
             CurrentPath currentPath = sink.currentPath();
             int oldPath = currentPath.enterListElement(i);
-            sink.encodeObject(elem, spi);
+            sink.encodeValue(elem, spi);
             currentPath.exit(oldPath);
             i++;
         }

@@ -67,7 +67,7 @@ public class ArrayDecoderGenerator implements DecoderGenerator {
             g.__(new Line("int oldPath = source.currentPath().enterListElement(i);"));
             g.__("arr[i++] = ("
             ).__(clazz.getComponentType().getCanonicalName()
-            ).__(new Line(")source.decodeObject(elemDecoder);"));
+            ).__(new Line(")source.decodeValue(elemDecoder);"));
             g.__(new Line("if (i == arr.length) { arr = java.util.Arrays.copyOf(arr, arr.length * 2); }"));
             g.__(new Line("source.currentPath().exit(oldPath);"));
         })).__(new Line("} while((b = source.read()) == ',');"));
